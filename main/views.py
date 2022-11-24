@@ -2,7 +2,8 @@ import re
 
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
 from main.models import ServiceRequest
@@ -30,5 +31,13 @@ def admin_page(request: WSGIRequest):
         raise Http404
 
     all_services = ServiceRequest.objects.order_by('-dt_created')
-
-    return render(request, 'main/admin_page.html', {'all_services': all_services})
+    if request.method == 'GET':
+        return render(request, 'main/admin_page.html', {'all_services': all_services})
+    print(request.POST)
+    service_id = int(request.POST['service_id'])
+    is_proc = request.POST.get('is_proc', 'off') == 'on'
+    service = ServiceRequest.objects.get(pk=service_id)
+    service.is_processed = is_proc
+    service.save()
+    return redirect(reverse('admin_page'))
+    # return render(request, 'main/admin_page.html', {'all_services': all_services})

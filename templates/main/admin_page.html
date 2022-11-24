@@ -1,40 +1,65 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="{%  static 'js/jquery3.js' %}"></script>
 </head>
 <style>
+    @media (min-width: 500px){
+     .type_field, .type_value, .sub_b {
+      font-size: calc(20px + (16 + 16 * 0.7) * ((100vw - 400px) / 1280));
+     }
+        .checkbox_proc {
+            width: calc(30px + (16 + 16 * 0.7) * ((100vw - 400px) / 1280));;
+            height: calc(30px + (16 + 16 * 0.7) * ((100vw - 400px) / 1280));;
+        }
+    }
     .service-card {
         padding: 10px;
         border-radius: 10px;
-        background: #b0f2ff;
         font-family: sans-serif;
+        background: white;
         margin-bottom: 15px;
+        width: 100%;
     }
-    .type_field {
-        font: bold 14px sans-serif;
-    }
+    {#.type_field {#}
+    {#    font: bold 100% sans-serif;#}
+    {#}#}
     .type_value {
         background: white;
         padding: 3px;
-        border: 1px solid black;
+        {#border: 1px solid black;#}
         border-radius: 3px;
         margin-bottom: 10px;
         display: inline-block;
-        padding-left: 5px;
         padding-right: 5px;
+        font-weight: bold;
+    }
+    .checkbox_proc{
+    margin-bottom: 10px}
     }
 </style>
-<body>
+<body style="background: #404351">
 {% for service in all_services %}
+<div style="width: 700px; margin: 0 auto;">
     <div class="service-card">
+    <form action="{% url 'admin_page' %}" method="post">
+        {% csrf_token %}
     <div><div class="type_field">Модель автомобиля:</div><div class="type_value"> {{ service.car_model_name }}</div></div>
         <div><div class="type_field">Год:</div><div class="type_value">{{ service.car_production_year }}</div></div>
         <div><div class="type_field">Объем двигателя:</div> <div class="type_value">{{ service.engine_volume }}</div></div>
         <div><div class="type_field">Номер телефона:</div> <div class="type_value">{{ service.phone }}</div></div>
         <div><div class="type_field">Дата заявки:</div> <div class="type_value">{{ service.dt_created }}</div></div>
-        <div><div class="type_field">Обработано:</div> <div class="type_value">{{ service.is_processed }}</div></div>
+        <div>
+            <input type="hidden" value="{{ service.id }}" name="service_id">
+            <div class="type_field">Обработано:</div>
+            <input class="checkbox_proc" type="checkbox" {% if service.is_processed %} checked {% endif %} name="is_proc">
+        </div>
+        <input class="sub_b" type="submit" value="Сохранить">
+    </form>
+    </div>
     </div>
 {% endfor %}
 </body>
