@@ -51,7 +51,7 @@
         <div><div class="type_field">Год:</div><div class="type_value">{{ service.car_production_year }}</div></div>
         <div><div class="type_field">Объем двигателя:</div> <div class="type_value">{{ service.engine_volume }}</div></div>
         <div><div class="type_field">Номер телефона:</div> <div class="type_value">{{ service.phone }}</div></div>
-        <div><div class="type_field">Дата заявки:</div> <div class="type_value">{{ service.dt_created }}</div></div>
+        <div><div class="type_field">Дата заявки:</div> <div class="type_value">{{ service.dt_created|date:"d-m-Y H:i" }}</div></div>
         <div>
             <input type="hidden" value="{{ service.id }}" name="service_id">
             <div class="type_field">Обработано:</div>
