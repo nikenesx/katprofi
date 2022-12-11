@@ -2,5 +2,5 @@ db.sqlite3
 __pycache__
 env
 .idea
-bin/
+bin
 kat/generate_gunicorn.py
