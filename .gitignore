@@ -4,3 +4,5 @@ env
 .idea
 bin
 kat/generate_gunicorn.py
+kat/gunicorn_config.py
+tok
